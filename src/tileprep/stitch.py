@@ -41,7 +41,8 @@ def stitch_tiles(
     out_width: int,
     overlap: int,
     mode: str = "feather",
-) -> np.ndarray:
+    return_coverage: bool = False,
+) -> np.ndarray | tuple[np.ndarray, np.ndarray]:
     """Blend tiles back into one (out_height, out_width, C) float32 image.
 
     Args:
@@ -50,6 +51,7 @@ def stitch_tiles(
         out_height, out_width: size to crop the result to (removes padding).
         overlap: overlap between neighbouring tiles, in output pixels.
         mode: "feather" or "mean".
+        return_coverage: also return a boolean (H, W) mask of covered pixels.
 
     Pixels not covered by any tile (e.g. skipped tiles) are returned as 0.
     """
@@ -70,5 +72,9 @@ def stitch_tiles(
         accum[y : y + size, x : x + size] += tile * window
         weight_sum[y : y + size, x : x + size] += window
 
-    out = np.divide(accum, weight_sum, out=np.zeros_like(accum), where=weight_sum > 0)
-    return out[:out_height, :out_width]
+    covered = weight_sum > 0
+    out = np.divide(accum, weight_sum, out=np.zeros_like(accum), where=covered)
+    out = out[:out_height, :out_width]
+    if return_coverage:
+        return out, covered[:out_height, :out_width, 0]
+    return out

@@ -49,9 +49,11 @@ def test_feather_blending_smooths_seams():
 
 def test_missing_tiles_leave_zeros():
     tile = np.ones((8, 8, 1), np.float32)
-    stitched = stitch_tiles([(0, 0, tile)], 8, 16, overlap=0)
+    stitched, covered = stitch_tiles([(0, 0, tile)], 8, 16, overlap=0, return_coverage=True)
     assert stitched[:, :8].min() == 1.0
     assert stitched[:, 8:].max() == 0.0
+    assert covered[:, :8].all()
+    assert not covered[:, 8:].any()
 
 
 def test_blend_weights_shape_and_bad_mode():
