@@ -1,6 +1,6 @@
 # satellite-tile-prep
 
-[![CI](https://github.com/RutuK2005/satellite-tile-prep/actions/workflows/ci.yml/badge.svg)](https://github.com/RutuK2005/satellite-tile-prep/actions/workflows/ci.yml)
+[![CI](https://github.com/RutuK2005/satellite-tile-prep/actions/workflows/ci.yml/badge.svg)](https://github.com/RutuK2005/satellite-tile-prep/actions/workflows/ci.yml) ![Python](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white) [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 A preprocessing toolkit that turns large satellite scenes into training data for
 super-resolution (SR) models. It loads 8- or 16-bit images with 1-4 bands, normalises
