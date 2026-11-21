@@ -68,7 +68,7 @@ def evaluate_tile(
 
     threshold = config.cloud_threshold if config else 0.9
     cloud_frac = float(np.all(valid >= threshold, axis=-1).mean())
-    # Mean of per-band standard deviations: robust to one dull band.
+    # Mean of per-band standard deviations, so one dull band can't skip the tile.
     std = float(valid.std(axis=0).mean())
     mean = float(valid.mean())
 

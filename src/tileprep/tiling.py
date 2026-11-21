@@ -1,12 +1,8 @@
 """Split a large scene into fixed-size, overlapping tiles.
 
-Terminology:
-    tile_size  side length of each square tile, in pixels
-    overlap    pixels shared by neighbouring tiles
-    stride     tile_size - overlap, i.e. how far the window moves each step
-
-If the scene size is not an exact multiple of the stride, the bottom/right
-edges are reflect-padded so that the last row/column of tiles is complete.
+stride = tile_size - overlap. If the scene size is not an exact multiple of
+the stride, the bottom/right edges are reflect-padded so that the last
+row/column of tiles is complete.
 Padding only ever happens on the bottom/right, so tile offsets in the padded
 image are also valid offsets in the original image.
 """

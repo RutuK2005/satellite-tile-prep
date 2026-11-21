@@ -1,9 +1,7 @@
 """Create low-resolution (LR) inputs from high-resolution (HR) tiles.
 
-Super-resolution models learn LR -> HR. Real paired LR/HR satellite imagery is
-rare, so the usual approach is to synthesise LR from HR with a known
-degradation: blur (approximating the sensor's point spread function), bicubic
-downsampling, and optional sensor noise.
+Real LR/HR satellite pairs are rare, so LR is made from HR: Gaussian blur
+(stand-in for the sensor PSF), bicubic downsampling and optional noise.
 """
 
 from __future__ import annotations
@@ -81,8 +79,7 @@ def augment_pair(
 ) -> tuple[np.ndarray, np.ndarray, int]:
     """Apply the same random dihedral transform to an LR/HR pair.
 
-    Using one transform for both keeps pixels aligned; transforming them
-    independently would teach the model a nonsense mapping.
+    Using one transform for both keeps LR and HR pixels aligned.
     """
     k = int(rng.integers(1, 8))  # skip k=0, the identity
     return dihedral(lr, k), dihedral(hr, k), k

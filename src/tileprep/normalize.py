@@ -8,8 +8,8 @@ Every method is expressed as the same affine transform per band:
     minmax      offset = min,    scale = max - min,       clipped
     zscore      offset = mean,   scale = std,             not clipped
 
-Storing just (offset, scale) per band keeps the JSON small, makes the inverse
-trivial, and guarantees that inference uses exactly the training transform.
+Only (offset, scale) per band is stored, so inference can reuse the training
+transform exactly and invert it.
 """
 
 from __future__ import annotations

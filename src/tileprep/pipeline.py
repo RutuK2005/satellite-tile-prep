@@ -119,10 +119,9 @@ def run_tiling(
 ) -> pd.DataFrame:
     """Tile many scenes (in parallel when workers > 1) and write manifest.csv.
 
-    Each scene is an independent job, so scenes are spread across processes.
-    Processes (not threads) let the Python-level per-tile loop run truly in
-    parallel despite the GIL. A scene that fails is logged and skipped so one
-    corrupt file does not abort a long batch.
+    Scenes are independent, so each one is a job in a process pool (the
+    per-tile loop is Python, so threads wouldn't help). A scene that fails is
+    logged and skipped so one corrupt file does not abort a long batch.
     """
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
